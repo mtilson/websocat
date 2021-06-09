@@ -11,11 +11,11 @@ COPY Cargo.toml Cargo.toml
 
 RUN mkdir src/ &&\
     echo "fn main() {println!(\"if you see this, the build broke\")}" > src/main.rs && \
-    RUSTFLAGS=-Clinker=musl-gcc cargo build --release --target=x86_64-unknown-linux-musl && \
+    RUSTFLAGS=-Clinker=musl-gcc cargo build --release --features=ssl --target=x86_64-unknown-linux-musl && \
     rm -f target/x86_64-unknown-linux-musl/release/deps/websocat*
 
 COPY . .
-RUN RUSTFLAGS=-Clinker=musl-gcc cargo build --release --target=x86_64-unknown-linux-musl
+RUN RUSTFLAGS=-Clinker=musl-gcc cargo build --release --features=ssl --target=x86_64-unknown-linux-musl
 
 # Final stage
 FROM alpine:3.12.0
